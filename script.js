@@ -89,7 +89,7 @@ const fakeApiSongs = [
         category: "indie",
         mood: "A smooth blend based on your taste",
         cover: "image/Tu mera Hero.jpg",
-        audio: "audio/Tu mera Hero.mp3",
+        audio: "audio/Tu Mera Hero.mp3",
         duration: "4:49",
         section: "charts"
     }

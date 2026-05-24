@@ -89,7 +89,7 @@ const fakeApiSongs = [
         category: "indie",
         mood: "A smooth blend based on your taste",
         cover: "image/Tu mera Hero.jpg",
-        audio: "audio/Tu Mera Hero.mp3",
+        audio: "audio/Tu mera Hero.mp3",
         duration: "4:49",
         section: "charts"
     }
@@ -170,13 +170,8 @@ function initCustomCursor() {
 }
 
 function fetchSongsFromFakeApi() {
-    showLoading(true);
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            showLoading(false);
-            resolve(fakeApiSongs);
-        }, 500);
-    });
+    showLoading(false);
+    return Promise.resolve(fakeApiSongs);
 }
 
 function bindEvents() {
@@ -448,7 +443,7 @@ function createSongCard(song) {
     return `
         <article class="card" data-song-id="${song.id}">
             <div class="card-art">
-                <img src="${song.cover}" class="card-img" alt="${song.title}">
+                <img src="${song.cover}" class="card-img" alt="${song.title}" loading="lazy" decoding="async">
                 <button class="card-action" data-song-id="${song.id}" aria-label="Play ${song.title}">
                     <i class="fa-solid fa-play"></i>
                 </button>

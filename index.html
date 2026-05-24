@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="icon" href="logo.png">
+    <link rel="icon" href="image/logo.png">
     <title>Spotify - Web Player: Music for everyone</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,22 +13,26 @@
 </head>
 <body>
     <div class="main">
-        <div class="sidebar">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="sidebar" id="sidebar">
             <div class="nav">
-                <div class="nav-option" style="opacity: 1;">
+                <div class="nav-option active-nav">
                     <i class="fa-solid fa-house"></i>
-                    <a href="#">Home</a>
+                    <a href="#recentlyPlayed">Home</a>
                 </div>
                 <div class="nav-option">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <a href="#">Search</a>
+                    <a href="#searchPanel">Search</a>
                 </div>
             </div>
             <div class="library">
                 <div class="options">
                     <div class="lib-option nav-option">
-                        <img src="library_icon.png">
-                        <a href="#">Your library</a>
+                        <img src="image/library_icon.png" alt="">
+                        <a href="#likedSongs">Your library</a>
                     </div>
                     <div class="icons">
                         <i class="fa-solid fa-plus"></i>
@@ -38,123 +42,105 @@
                 <div class="lib-box">
                     <div class="box">
                         <p class="box-p1">Create Your First playlist</p>
-                        <p class="box-p2">It's easy, We'll help you</p>
-                        <button class="bedge">Create Playlist</button>
+                        <p class="box-p2">It's easy, we'll help you</p>
+                        <button class="bedge" id="createPlaylistBtn">Create Playlist</button>
                     </div>
-                    <div class="box">
-                        <p class="box-p1">Let's find some poscasts to folow</p>
-                        <p class="box-p2">we'll keep updated on new episodes</p>
-                        <button class="bedge">Browse podcasts</button>
+                    <div class="box queue-box">
+                        <p class="box-p1">Mini Queue</p>
+                        <div class="sidebar-queue" id="sidebarQueue"></div>
                     </div>
                 </div>
-
             </div>
         </div>
+
         <div class="main-content">
             <div class="sticky-nav">
                 <div class="sticky-nav-icons">
-                    <img src="backward_icon.png">
-                    <img src="forward_icon.png" class="hide">
+                    <img src="image/backward_icon.png" alt="Back">
+                    <img src="image/forward_icon.png" alt="Forward" class="hide">
+                </div>
+                <div class="search-panel" id="searchPanel">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="searchInput" placeholder="What do you want to play?">
                 </div>
                 <div class="sticky-nav-option">
-                    <button class="bedge nav-item hide" >Explore Premium</button>
-                    <button class="bedge nav-item dark-badge"> <i class="fa-regular fa-circle-down" style="margin-right: 0.5rem;"></i>Install App</button>
+                    <button class="bedge nav-item hide">Explore Premium</button>
+                    <button class="bedge nav-item dark-badge"><i class="fa-regular fa-circle-down"></i>Install App</button>
                     <i class="fa-regular fa-user nav-item"></i>
                 </div>
-                
             </div>
 
-            <h2>Recently Played</h2>
-            <div class="card-container">
-                <div class="card">
-                    <img src="card1img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
+            <div class="filter-bar" id="filterBar">
+                <button class="filter-chip active" data-category="all">All</button>
+                <button class="filter-chip" data-category="bollywood">Bollywood</button>
+                <button class="filter-chip" data-category="indie">Indie</button>
+                <button class="filter-chip" data-category="charts">Charts</button>
             </div>
+
+            <h2 id="recentlyPlayed">Recently Played</h2>
+            <div class="card-container" id="recentlyPlayedGrid"></div>
+
             <h2>Trending now near you</h2>
-            <div class="card-container">
-                <div class="card">
-                    <img src="arjunvally.jpg" class="card-img" style="width: 150px; height: 150px;">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-                <div class="card">
-                    <img src="ms dhoni.jpg" class="card-img" style="width: 150px; height: 150px;">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-                <div class="card">
-                    <img src="zinda.jpg" class="card-img" style="width: 150px; height: 150px;">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-                <div class="card">
-                    <img src="the arjit singh,jpg.jpg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-                <div class="card">
-                    <img src="teri bato me aisa.jpg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-            </div>
+            <div class="card-container" id="trendingGrid"></div>
+
             <h2>Featured charts</h2>
-            <div class="card-container">
-                <div class="card">
-                    <img src="card5img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-                <div class="card">
-                    <img src="card6img.jpeg" class="card-img">
-                    <p class="card-title">Top songs - india</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-                <div class="card">
-                    <img src="card1img.jpeg" class="card-img">
-                    <p class="card-title">Top 50 - Global</p>
-                    <p class="card-information"> Your daily updates of the most played....</p> 
-                </div>
-            </div>
+            <div class="card-container" id="chartsGrid"></div>
+
+            <h2>Your Queue</h2>
+            <div class="queue-list" id="queueList"></div>
+
+            <h2 id="likedSongs">Liked Songs</h2>
+            <div class="card-container" id="likedSongsGrid"></div>
+            <div class="empty-state" id="emptyState">No songs found</div>
+
             <div class="footer">
                 <div class="line"></div>
             </div>
         </div>
-        <div class="music-player">
+
+        <div class="music-player" id="musicPlayer">
             <div class="album">
-                <img src="arjunvally.jpg" class="arjun">
+                <img src="image/arjunvally.jpg" class="arjun" id="playerCover" alt="Album cover">
                 <div class="arjun-content">
-                    <P>Arjun Vailly(from"Animal")</P>
-                    <p class="arjun-content-p">Manan bhardwaj,bhupender Babbal</p>
+                    <p id="playerTitle">Arjan Vailly</p>
+                    <p class="arjun-content-p" id="playerArtist">Manan Bhardwaj, Bhupinder Babbal</p>
                 </div>
-                <i class="fa-solid fa-circle-plus al-icon"></i>
+                <button class="icon-button like-current" id="likeCurrentBtn" aria-label="Like current song">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                <div class="equalizer" id="equalizer" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
             </div>
             <div class="player">
                 <div class="player-control">
-                    <img src="player_icon1.png" class="player-control-icons">
-                    <img src="player_icon2.png" class="player-control-icons">
-                    <img src="player_icon3.png" class="player-control-icons" style="opacity: 1 ; height: 2rem;">
-                    <img src="player_icon4.png" class="player-control-icons">
-                    <img src="player_icon5.png" class="player-control-icons">
-
+                    <button class="player-button" id="shuffleBtn" aria-label="Shuffle"><img src="image/player_icon1.png" class="player-control-icons" alt=""></button>
+                    <button class="player-button" id="prevBtn" aria-label="Previous"><img src="image/player_icon2.png" class="player-control-icons" alt=""></button>
+                    <button class="play-button" id="playPauseBtn" aria-label="Play"><i class="fa-solid fa-play"></i></button>
+                    <button class="player-button" id="nextBtn" aria-label="Next"><img src="image/player_icon4.png" class="player-control-icons" alt=""></button>
+                    <button class="player-button" id="repeatBtn" aria-label="Repeat"><img src="image/player_icon5.png" class="player-control-icons" alt=""></button>
                 </div>
                 <div class="playback-bar">
-                    <span class="curront time">00:00</span>
-                    <input type="range" min="0" max="100" class="progres-bar" step="1">
-                    <span class="total time">3:30</span>
+                    <span class="curront time" id="currentTime">00:00</span>
+                    <input type="range" min="0" max="100" value="0" class="progres-bar" id="progressBar" step="0.1">
+                    <span class="total time" id="durationTime">00:00</span>
                 </div>
             </div>
             <div class="controls">
-                <i class="fa-regular fa-circle-play"></i>
+                <i class="fa-solid fa-list"></i>
                 <i class="fa-solid fa-microphone"></i>
                 <i class="fa-solid fa-sliders"></i>
                 <i class="fa-solid fa-laptop"></i>
-                <i class="fa-solid fa-volume-high"></i>
-                <input type="range" min="0" max="100" class="sound" step="1">
+                <button class="icon-button" id="muteBtn" aria-label="Mute"><i class="fa-solid fa-volume-high"></i></button>
+                <input type="range" min="0" max="100" value="80" class="sound" id="volumeSlider" step="1">
             </div>
         </div>
     </div>
+
+    <div class="toast" id="toast"></div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

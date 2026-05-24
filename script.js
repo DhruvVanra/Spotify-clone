@@ -109,8 +109,10 @@ const state = {
 };
 
 const audio = new Audio();
-audio.preload = "none";
+audio.preload = "metadata";
 audio.volume = 0.8;
+
+const prefetchedAudioUrls = new Set();
 
 const elements = {
     recentlyPlayedGrid: document.querySelector("#recentlyPlayedGrid"),
@@ -209,23 +211,57 @@ function loadSong(index, shouldPlay = true) {
 
     if (!song) return;
 
+    const songUrl = getAssetUrl(song.audio);
+    const isSameSong = audio.src === songUrl;
     state.currentIndex = index;
-    audio.src = song.audio;
     elements.playerCover.src = song.cover;
     elements.playerTitle.textContent = song.title;
     elements.playerArtist.textContent = song.artist;
-    elements.durationTime.textContent = song.duration;
-    elements.currentTime.textContent = "00:00";
-    elements.progressBar.value = 0;
+
+    if (!isSameSong) {
+        audio.src = song.audio;
+        audio.load();
+        elements.durationTime.textContent = song.duration;
+        elements.currentTime.textContent = "00:00";
+        elements.progressBar.value = 0;
+    }
 
     updateLikeButton();
     updateActiveCards();
     updateRecentlyPlayed(song.id);
     updateQueue();
+    prefetchNearbySongs(index);
 
     if (shouldPlay) {
         playSong();
     }
+}
+
+function getAssetUrl(path) {
+    return new URL(path, window.location.href).href;
+}
+
+function prefetchNearbySongs(index) {
+    const nextIndex = index === state.songs.length - 1 ? 0 : index + 1;
+    const previousIndex = index === 0 ? state.songs.length - 1 : index - 1;
+
+    prefetchSongAudio(nextIndex);
+    prefetchSongAudio(previousIndex);
+}
+
+function prefetchSongAudio(index) {
+    const song = state.songs[index];
+    if (!song) return;
+
+    const songUrl = getAssetUrl(song.audio);
+    if (prefetchedAudioUrls.has(songUrl)) return;
+
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "audio";
+    link.href = song.audio;
+    document.head.appendChild(link);
+    prefetchedAudioUrls.add(songUrl);
 }
 
 function playSong() {
@@ -466,6 +502,13 @@ function createSongCard(song) {
 function playSongFromId(songId) {
     const index = state.songs.findIndex((song) => song.id === songId);
     if (index === -1) return;
+
+    if (index === state.currentIndex && audio.src) {
+        togglePlay();
+        elements.sidebar.classList.remove("show");
+        return;
+    }
+
     loadSong(index);
     elements.sidebar.classList.remove("show");
 }
